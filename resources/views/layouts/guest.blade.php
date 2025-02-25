@@ -15,69 +15,97 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
     <style>
-        /* Background Gradasi Lembut */
+        /* Background Gradient */
         body {
             background: linear-gradient(to bottom right, #D4E0FC, #FFFFFF, #E0D4FC);
             background-attachment: fixed;
             font-family: 'Quicksand', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
         }
 
-        /* Efek Blur dan Border Elegan */
+        /* Card Styling */
         .card-container {
             background: rgba(255, 255, 255, 0.85);
             backdrop-filter: blur(15px);
             border: 1px solid rgba(99, 102, 241, 0.2);
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            border-radius: 12px;
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
         }
 
-        /* Logo Tulisan Aesthetic */
+        /* Logo Styling */
         .logo-text {
+            font-size: 2rem;
+            font-weight: 800;
             font-family: 'Pacifico', cursive;
-            font-size: 2.2rem;
-            font-weight: 700;
             color: #4F46E5;
-            text-shadow: 2px 2px 5px rgba(79, 70, 229, 0.3);
-            transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
-        }
-        .logo-text:hover {
-            opacity: 0.9;
-            transform: scale(1.05);
+            letter-spacing: -1px;
+            text-transform: capitalize;
+            text-align: center;
+            margin-bottom: 20px;
+            display: block;
         }
 
-        /* Tombol Log In */
-        .btn-login {
+        .logo-text:hover {
+            opacity: 0.8;
+        }
+
+        /* Navbar Links */
+        .nav-link {
+            color: #4F46E5;
+            font-weight: 600;
+            transition: color 0.3s;
+            text-decoration: none;
+        }
+
+        .nav-link:hover {
+            color: #4338CA;
+        }
+
+        /* Button Styling */
+        .btn-new-entry {
             background: #4F46E5;
             color: white;
             font-weight: 600;
-            padding: 12px 24px;
-            font-size: 1rem;
+            padding: 10px 20px;
             border-radius: 8px;
-            box-shadow: 0 5px 15px rgba(79, 70, 229, 0.3);
-            transition: all 0.3s ease-in-out;
-            display: block;
-            text-align: center;
+            transition: background 0.3s, transform 0.2s;
+            display: inline-block;
+            text-decoration: none;
+            margin-top: 10px;
         }
-        .btn-login:hover {
+
+        .btn-new-entry:hover {
             background: #4338CA;
-            box-shadow: 0 8px 20px rgba(79, 70, 229, 0.4);
             transform: translateY(-2px);
+        }
+
+        /* Welcome Message */
+        .welcome-text {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #4F46E5;
+            margin-top: 20px;
         }
     </style>
 </head>
-<body class="font-sans text-gray-900 antialiased">
+<body>
 
-    <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0">
-        <!-- Logo (Tulisan Aesthetic) -->
-        <div>
-            <a href="/" class="logo-text">
-                My Diaries
-            </a>
-        </div>
+    <!-- Logo -->
+    <a href="{{ route('dashboard') }}" class="logo-text">
+        My Diaries
+    </a>
 
-        <!-- Card Container -->
-        <div class="w-full sm:max-w-md mt-6 px-6 py-4 card-container rounded-lg">
-            {{ $slot }}
-        </div>
+    <!-- Card Container -->
+    <div class="card-container">
+        {{ $slot }}
     </div>
 
 </body>

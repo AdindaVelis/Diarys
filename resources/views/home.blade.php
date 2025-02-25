@@ -47,16 +47,6 @@
 </head>
 <body class="min-h-screen flex flex-col relative">
 
-<!-- Navbar -->
-<nav class="navbar fixed top-0 left-0 w-full z-50">
-    <div class="max-w-7xl mx-auto px-6 lg:px-8">
-        <div class="flex justify-between h-16 items-center">
-            <a href="{{ route('home') }}" class="text-3xl font-bold text-blue-600 hover:opacity-80 transition">
-                My Diaries
-            </a>
-        </div>
-    </div>
-</nav>
 
 <!-- Hero Section -->
 <section class="flex items-center justify-center flex-grow px-4 text-center">
