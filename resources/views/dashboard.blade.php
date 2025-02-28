@@ -98,10 +98,6 @@
             <!-- User & New Entry -->
             <div class="flex items-center space-x-4">
                 
-                <!-- New Entry Button -->
-                <a href="{{ route('diaries.create') }}" class="btn-new-entry">
-                    ✏️ New Entry
-                </a>
 
                 <!-- User Dropdown -->
                 <div x-data="{ open: false }" class="relative">

@@ -86,9 +86,6 @@
 
         <!-- User dan New Entry -->
         <div class="flex items-center space-x-4">
-            <a href="{{ route('diaries.create') }}" class="bg-sky-500 text-white font-semibold py-2 px-4 rounded-full hover:bg-sky-600 shadow-md transition">
-                ✍️ New Entry
-            </a>
 
             <!-- Dropdown User -->
             <div x-data="{ open: false }" class="relative">

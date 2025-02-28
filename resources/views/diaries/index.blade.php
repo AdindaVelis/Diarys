@@ -1,16 +1,28 @@
 <x-app-layout>
-    <div class="pt-20 bg-gray-100 min-h-screen">
-        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 space-y-4">
+    <div class="pt-20 min-h-screen flex flex-col items-center" 
+         style="background: linear-gradient(to bottom right, #D4E0FC, #FFFFFF, #E0D4FC);">
+        
+        <div class="max-w-5xl w-full px-4 sm:px-6 lg:px-8 space-y-6">
+
+            <!-- Tombol New Entry -->
+            <div class="flex justify-end">
+                <a href="{{ route('diaries.create') }}" 
+                   class="bg-indigo-500 hover:bg-indigo-600 text-white px-5 py-3 rounded-full shadow-md hover:shadow-lg transform hover:scale-105 transition">
+                    📝 New Entry
+                </a>
+            </div>
+
             @forelse ($diaries as $diary)
-                <div class="bg-white shadow-lg rounded-lg p-6 border-l-4 border-sky-300 hover:shadow-xl transition">
+                <div class="bg-white bg-opacity-85 shadow-xl rounded-2xl p-6 border-l-4 border-indigo-300 backdrop-blur-lg hover:shadow-2xl transition">
                     <div class="flex space-x-4">
+                        
                         <!-- Gambar -->
-                        <div class="w-40 h-32 rounded-lg overflow-hidden shadow-md border border-gray-200">
+                        <div class="w-40 h-32 rounded-lg overflow-hidden shadow-md border border-gray-300">
                             @if ($diary->image)
                                 <img src="{{ Storage::url($diary->image) }}" alt="{{ $diary->title }}" 
                                      class="w-full h-full object-cover">
                             @else
-                           <div class="w-full h-full flex items-center justify-center bg-gray-100">
+                                <div class="w-full h-full flex items-center justify-center bg-gray-100">
                                     <span class="text-gray-400 italic">No Image</span>
                                 </div>
                             @endif
@@ -18,13 +30,13 @@
 
                         <!-- Detail -->
                         <div class="flex-1">
-                            <h3 class="text-xl font-bold text-sky-600">{{ $diary->title }}</h3>
-                            <p class="text-gray-600 line-clamp-2 italic">
+                            <h3 class="text-xl font-bold text-indigo-600">{{ $diary->title }}</h3>
+                            <p class="text-gray-700 line-clamp-2 italic">
                                 {{ Str::limit($diary->description, 80) }}
                             </p>
 
                             <button onclick="showModal({{ $diary->id }})" 
-                                    class="text-sky-500 underline text-sm font-semibold hover:text-sky-700 transition">
+                                    class="text-indigo-500 underline text-sm font-semibold hover:text-indigo-700 transition">
                                 💌 Read More
                             </button>
 
@@ -33,7 +45,7 @@
                             <!-- Buttons -->
                             <div class="mt-4 flex space-x-2">
                                 <a href="{{ route('diaries.edit', $diary->id) }}" 
-                                   class="bg-sky-400 hover:bg-sky-500 text-white px-4 py-2 rounded-full shadow-md hover:shadow-lg transition">
+                                   class="bg-indigo-400 hover:bg-indigo-500 text-white px-4 py-2 rounded-full shadow-md hover:shadow-lg transition">
                                     ✏ Edit
                                 </a>
                                 <form action="{{ route('diaries.destroy', $diary->id) }}" method="POST" 
@@ -52,17 +64,17 @@
 
                 <!-- Modal -->
                 <div id="modal-{{ $diary->id }}" class="fixed inset-0 bg-gray-900 bg-opacity-30 flex items-center justify-center hidden">
-                    <div class="bg-white p-6 rounded-xl shadow-lg max-w-lg border border-sky-300">
-                        <h3 class="text-xl font-bold text-sky-600">{{ $diary->title }}</h3>
+                    <div class="bg-white p-6 rounded-xl shadow-lg max-w-lg border border-indigo-300">
+                        <h3 class="text-xl font-bold text-indigo-600">{{ $diary->title }}</h3>
                         <p class="text-gray-700 mt-4">{{ $diary->description }}</p>
                         <button onclick="closeModal({{ $diary->id }})" 
-                                class="mt-4 bg-sky-500 hover:bg-sky-600 text-white px-4 py-2 rounded-full">
+                                class="mt-4 bg-indigo-500 hover:bg-indigo-600 text-white px-4 py-2 rounded-full">
                             ❌ Close
                         </button>
                     </div>
                 </div>
             @empty
-                <p class="text-center text-sky-500 italic py-6">
+                <p class="text-center text-indigo-500 italic py-6">
                     ☁️ No diary entries yet. Start writing your beautiful stories! ✨
                 </p>
             @endforelse
@@ -83,14 +95,14 @@
                             </span>
                         @else
                             <a href="{{ $diaries->previousPageUrl() }}" 
-                               class="flex items-center px-4 py-2 text-white bg-sky-500 rounded-full shadow-md hover:bg-sky-600 transition">
+                               class="flex items-center px-4 py-2 text-white bg-indigo-500 rounded-full shadow-md hover:bg-indigo-600 transition">
                                 ⬅️ Prev
                             </a>
                         @endif
 
                         @if ($diaries->hasMorePages())
                             <a href="{{ $diaries->nextPageUrl() }}" 
-                               class="flex items-center px-4 py-2 text-white bg-sky-500 rounded-full shadow-md hover:bg-sky-600 transition">
+                               class="flex items-center px-4 py-2 text-white bg-indigo-500 rounded-full shadow-md hover:bg-indigo-600 transition">
                                 Next ➡️
                             </a>
                         @else

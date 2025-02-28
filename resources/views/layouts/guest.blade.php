@@ -5,13 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Diaries') }}</title>
+    <title>{{ config('app.name', 'My Diaries') }}</title>
 
     <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Quicksand:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
 
-    <!-- Scripts -->
+    <!-- Styles & Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
     <style>
@@ -19,40 +18,38 @@
         body {
             background: linear-gradient(to bottom right, #D4E0FC, #FFFFFF, #E0D4FC);
             background-attachment: fixed;
-            font-family: 'Quicksand', sans-serif;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
+            font-family: 'Poppins', sans-serif;
         }
 
-        /* Card Styling */
-        .card-container {
-            background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(15px);
-            border: 1px solid rgba(99, 102, 241, 0.2);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-            padding: 20px;
-            border-radius: 12px;
+        /* Background Gradient */
+        body {
+            background: linear-gradient(to bottom right, #D4E0FC, #FFFFFF, #E0D4FC);
+            background-attachment: fixed;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        /* Navbar Styling */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
             width: 100%;
-            max-width: 400px;
-            text-align: center;
+            z-index: 50;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.05);
         }
 
-        /* Logo Styling */
+        /* Logo Styling (Sesuai navigation.blade.php) */
         .logo-text {
             font-size: 2rem;
             font-weight: 800;
-            font-family: 'Pacifico', cursive;
+            font-family: 'Pacifico', cursive; /* Pastikan font sama */
             color: #4F46E5;
             letter-spacing: -1px;
             text-transform: capitalize;
-            text-align: center;
-            margin-bottom: 20px;
-            display: block;
+            transition: opacity 0.3s ease-in-out;
         }
-
         .logo-text:hover {
             opacity: 0.8;
         }
@@ -62,9 +59,7 @@
             color: #4F46E5;
             font-weight: 600;
             transition: color 0.3s;
-            text-decoration: none;
         }
-
         .nav-link:hover {
             color: #4338CA;
         }
@@ -77,11 +72,7 @@
             padding: 10px 20px;
             border-radius: 8px;
             transition: background 0.3s, transform 0.2s;
-            display: inline-block;
-            text-decoration: none;
-            margin-top: 10px;
         }
-
         .btn-new-entry:hover {
             background: #4338CA;
             transform: translateY(-2px);
@@ -94,19 +85,28 @@
             color: #4F46E5;
             margin-top: 20px;
         }
+
+         /* Card Styling */
+         .card-container {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(99, 102, 241, 0.2);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
     </style>
 </head>
 <body>
+    <div class="min-h-screen flex flex-col justify-center items-center">
+        
+         <!-- Logo (Sama dengan navigation.blade.php) -->
+         <a href="{{ route('dashboard') }}" class="logo-text">
+                My Diaries
+            </a>
 
-    <!-- Logo -->
-    <a href="{{ route('dashboard') }}" class="logo-text">
-        My Diaries
-    </a>
-
-    <!-- Card Container -->
-    <div class="card-container">
-        {{ $slot }}
+        <!-- Card Container -->
+        <div class="w-full sm:max-w-md mt-6 px-6 py-4 card-container rounded-lg">
+            {{ $slot }}
+        </div>
     </div>
-
 </body>
 </html>
