@@ -16,6 +16,12 @@ Route::get('/', function () {
     return view('home');
 })->name('home');
 
+Route::get('/', function () {
+    return view('home', [
+        'diaries' => Auth::check() ? Auth::user()->diaries()->latest()->take(5)->get() : []
+    ]);
+})->name('home');
+
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
