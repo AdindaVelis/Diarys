@@ -42,31 +42,40 @@
 
                             <p class="text-gray-500 text-sm mt-2">By <strong>{{ $diary->user->name }}</strong></p>
 
-                            <!-- Buttons -->
-                            <div class="mt-4 flex space-x-2">
-                                <a href="{{ route('diaries.edit', $diary->id) }}" 
-                                   class="bg-indigo-400 hover:bg-indigo-500 text-white px-4 py-2 rounded-full shadow-md hover:shadow-lg transition">
-                                    ✏ Edit
-                                </a>
-                                <form action="{{ route('diaries.destroy', $diary->id) }}" method="POST" 
-                                      onsubmit="return confirm('Are you sure you want to delete this diary?')">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" 
-                                            class="bg-gray-400 hover:bg-gray-500 text-white px-4 py-2 rounded-full shadow-md hover:shadow-lg transition">
-                                        🗑 Delete
-                                    </button>
-                                </form>
-                            </div>
+                            <!-- Hanya Pemilik yang Bisa Edit & Hapus -->
+                            @if (Auth::id() === $diary->user_id)
+                                <div class="mt-4 flex space-x-2">
+                                    <a href="{{ route('diaries.edit', $diary->id) }}" 
+                                       class="bg-indigo-400 hover:bg-indigo-500 text-white px-4 py-2 rounded-full shadow-md hover:shadow-lg transition">
+                                        ✏ Edit
+                                    </a>
+                                    <form action="{{ route('diaries.destroy', $diary->id) }}" method="POST" 
+                                          onsubmit="return confirm('Are you sure you want to delete this diary?')">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" 
+                                                class="bg-gray-400 hover:bg-gray-500 text-white px-4 py-2 rounded-full shadow-md hover:shadow-lg transition">
+                                            🗑 Delete
+                                        </button>
+                                    </form>
+                                </div>
+                            @endif
                         </div>
                     </div>
                 </div>
 
                 <!-- Modal -->
-                <div id="modal-{{ $diary->id }}" class="fixed inset-0 bg-gray-900 bg-opacity-30 flex items-center justify-center hidden">
-                    <div class="bg-white p-6 rounded-xl shadow-lg max-w-lg border border-indigo-300">
+                <div id="modal-{{ $diary->id }}" class="fixed inset-0 bg-gray-900 bg-opacity-50 z-50 flex items-center justify-center hidden">
+                    <div class="bg-white p-6 rounded-xl shadow-lg max-w-lg border border-indigo-300 max-h-screen overflow-auto relative">
                         <h3 class="text-xl font-bold text-indigo-600">{{ $diary->title }}</h3>
                         <p class="text-gray-700 mt-4">{{ $diary->description }}</p>
+                        
+                        <!-- Tombol Cetak -->
+                        <button onclick="printDiary({{ $diary->id }})"
+                                class="mt-4 bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-full">
+                            🖨 Print
+                        </button>
+
                         <button onclick="closeModal({{ $diary->id }})" 
                                 class="mt-4 bg-indigo-500 hover:bg-indigo-600 text-white px-4 py-2 rounded-full">
                             ❌ Close
@@ -117,12 +126,27 @@
     </div>
 </x-app-layout>
 
-<!-- JavaScript Modal -->
+<!-- JavaScript Modal & Print -->
 <script>
     function showModal(id) {
         document.getElementById('modal-' + id).classList.remove('hidden');
     }
+
     function closeModal(id) {
         document.getElementById('modal-' + id).classList.add('hidden');
+    }
+
+    function printDiary(id) {
+        let modal = document.getElementById('modal-' + id);
+        let title = modal.querySelector('h3').innerText;
+        let description = modal.querySelector('p').innerText;
+
+        let printWindow = window.open('', '', 'width=800,height=600');
+        printWindow.document.write('<html><head><title>Cetak Diary</title></head><body>');
+        printWindow.document.write('<h1>' + title + '</h1>');
+        printWindow.document.write('<p>' + description + '</p>');
+        printWindow.document.write('</body></html>');
+        printWindow.document.close();
+        printWindow.print();
     }
 </script>
